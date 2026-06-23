@@ -107,7 +107,7 @@ export default function App() {
   <shop_id>${FNAC_SHOP}</shop_id>
   <key>${FNAC_KEY}</key>
 </auth>`;
-    const res = await fetch("/fnac-api/api.php/auth", {
+    const res = await fetch("/api/fnac/auth", {
       method: "POST", headers: { "Content-Type": "text/xml", "Accept": "text/xml" }, body: xml,
     });
     const text = await res.text();
@@ -131,7 +131,7 @@ export default function App() {
     const xml = `<?xml version="1.0" encoding="utf-8"?>
 <offers_update xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" partner_id="${FNAC_PARTNER}" shop_id="${FNAC_SHOP}" token="${token}">
 ${offersXml}</offers_update>`;
-    const res = await fetch("/fnac-api/api.php/offers_update", {
+    const res = await fetch("/api/fnac/offers_update", {
       method: "POST", headers: { "Content-Type": "text/xml", "Accept": "text/xml" }, body: xml,
     });
     const text = await res.text();
@@ -145,7 +145,7 @@ ${offersXml}</offers_update>`;
 <offers_query xmlns="http://www.fnac.com/schemas/mp-dialog.xsd" partner_id="${FNAC_PARTNER}" shop_id="${FNAC_SHOP}" token="${token}">
   <paging>1</paging>
 </offers_query>`;
-    const res = await fetch("/fnac-api/api.php/offers_query", {
+    const res = await fetch("/api/fnac/offers_query", {
       method: "POST", headers: { "Content-Type": "text/xml", "Accept": "text/xml" }, body: xml,
     });
     const text = await res.text();
