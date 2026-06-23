@@ -29,6 +29,26 @@ app.use((req, res, next) => {
   }
 });
 
+// Test Fnac connection
+app.get('/test-fnac', async (req, res) => {
+  try {
+    const response = await fetch('https://vendeur.fnac.com/api.php/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/xml', 'Accept': 'text/xml' },
+      body: `<?xml version="1.0" encoding="utf-8"?>
+<auth xmlns="http://www.fnac.com/schemas/mp-dialog.xsd">
+  <partner_id>10C11611-199E-B744-24BF-14BFA63EBB22</partner_id>
+  <shop_id>2ED8F7EC-28CA-0DF5-B898-F42C3AB4C585</shop_id>
+  <key>E2764892-BD7E-982F-4571-2D62DDDFB8A1</key>
+</auth>`
+    });
+    const text = await response.text();
+    res.json({ status: response.status, body: text });
+  } catch (e) {
+    res.json({ error: e.message });
+  }
+});
+
 // Proxies
 app.use('/odoo-api', createProxyMiddleware({
   target: process.env.ODOO_URL || 'https://javier-vela.odoo.com',
